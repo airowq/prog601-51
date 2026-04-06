@@ -34,7 +34,7 @@ store = {
 # Рассчитать на какую сумму лежит каждого товара на складе
 # например для ламп
 
-lamps_cost = store[goods['Лампа']][0]['quantity'] * store[goods['Лампа']][0]['price']
+
 # или проще (/сложнее ?)
 lamp_code = goods['Лампа']
 lamps_item = store[lamp_code][0]
@@ -53,3 +53,18 @@ print('Лампа -', lamps_quantity, 'шт, стоимость', lamps_cost, '�
 # Это задание на ручное вычисление - что бы потом понять как работают циклы и насколько с ними проще жить.
 
 # TODO здесь ваш код
+def kol(a, b):
+    try: 
+        return store[goods[a]][b]['quantity'] + kol(a, b+1)
+    except:
+        return store[goods[a]][b]['quantity']
+def sel(a, b):
+    try:
+        return store[goods[a]][b]['quantity'] * store[goods[a]][b]['price'] + sel(a, b+1)
+    except:
+        return store[goods[a]][b]['quantity'] * store[goods[a]][b]['price']
+
+print(
+    "Стул -", kol('Стул',0), 'шт, стоимость', sel('Стул',0), "руб\n"\
+    "Стол -", kol('Стол',0), 'шт, стоимость', sel('Стол',0), "руб\n"\
+    "Диван -", kol('Диван',0), 'шт, стоимость', sel('Диван',0), "руб")
